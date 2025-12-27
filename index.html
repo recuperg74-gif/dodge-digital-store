@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dodge Digital Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: black;
+            color: white;
+            font-family: system-ui, -apple-system, sans-serif;
+            padding-bottom: 0 !important;
+        }
+        /* Esconder console messages e warnings */
+        [class*="console"],
+        [class*="Console"],
+        [class*="warning"],
+        [class*="Warning"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            height: 0 !important;
+            overflow: hidden !important;
+        }
+        /* Garantir que o conteúdo ocupe toda a tela */
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body>
+    <header class="fixed top-0 left-0 right-0 bg-black z-50 px-4 py-3 border-b border-gray-800">
+        <div class="flex items-center justify-between max-w-7xl mx-auto">
+            <div class="flex items-center gap-3">
+                <button onclick="toggleMenu()" class="p-2 hover:bg-gray-800 rounded-lg transition-colors">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+                <div>
+                    <h1 class="text-2xl font-bold text-white leading-none">Dodge Digital</h1>
+                    <div class="flex items-center gap-2">
+                        <h2 class="text-2xl font-bold text-red-600 leading-none">Store</h2>
+                        <div class="flex items-center gap-1.5 ml-2">
+                            <div class="flex items-center gap-1 bg-gray-800 px-1.5 py-0.5 rounded-md">
+                                <span class="text-white font-bold text-xs">0</span>
+                                <div class="w-4 h-4 bg-white rounded-full flex items-center justify-center">
+                                    <span class="text-black font-bold text-[10px]">D</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-1 bg-gray-800 px-1.5 py-0.5 rounded-md">
+                                <span class="text-white font-bold text-xs">0</span>
+                                <div class="w-4 h-4 bg-red-600 rounded-full flex items-center justify-center">
+                                    <span class="text-white font-bold text-[10px]">S</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="toggleSearch()" class="ml-4 p-2 hover:bg-gray-800 rounded-lg transition-colors">
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+            </div>
+        </div>
+    </header>
+
+    <div id="menuDropdown" class="fixed top-16 left-4 bg-gray-900 border border-gray-700 rounded-lg shadow-2xl z-50 w-64 hidden">
+        <div class="py-2">
+            <button onclick="showConfiguracoes()" class="w-full px-4 py-3 text-left text-white hover:bg-gray-800 transition-colors flex items-center gap-3">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                Configurações
+            </button>
+            
+            <button onclick="showVersoes()" class="w-full px-4 py-3 text-left text-white hover:bg-gray-800 transition-colors flex items-center gap-3 border-t border-gray-800">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                </svg>
+                Versões
+            </button>
+        </div>
+    </div>
+
+    <div id="searchBar" class="fixed top-32 left-0 right-0 bg-black border-b border-gray-800 z-40 px-4 py-4 hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="relative">
+                <input type="text" id="searchInput" placeholder="Pesquisar produtos..." oninput="filterProducts()" class="w-full bg-gray-900 text-white px-4 py-3 pl-12 rounded-lg border border-gray-700 focus:border-red-600 focus:outline-none">
+                <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+            </div>
+            
+            <div id="searchResults" class="mt-4 bg-gray-900 rounded-lg border border-gray-800 max-h-96 overflow-y-auto hidden">
+            </div>
+        </div>
+    </div>
+
+    <div id="productModal" class="fixed inset-0 bg-black bg-opacity-80 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-gray-900 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border-2 border-gray-700">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h2 id="modalTitle" class="text-4xl font-bold"></h2>
+                    <button onclick="closeProductModal()" class="text-gray-400 hover:text-white text-3xl">×</button>
+                </div>
+                <div id="modalImage" class="mb-6"></div>
+                <p id="modalDescription" class="text-gray-300 text-lg mb-6"></p>
+                <a href="https://www.jotform.com/agent/019b38d959497d02893a625fdb6ef741be6f" target="_blank" class="block w-full bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors text-center">
+                    Comprar Agora
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <nav class="fixed top-16 left-0 right-0 bg-black border-b border-gray-800 z-40 px-4 py-3">
+        <div class="flex gap-6 max-w-7xl mx-auto overflow-x-auto">
+            <button onclick="showPage('todos')" class="whitespace-nowrap text-sm font-medium pb-1 text-white border-b-2 border-red-600">
+                Todos os Produtos
+            </button>
+            <button onclick="showPage('software')" class="whitespace-nowrap text-sm font-medium pb-1 text-gray-400 hover:text-white">
+                Software
+            </button>
+            <button class="text-gray-400 whitespace-nowrap text-sm font-medium hover:text-white">
+                Serviços
+            </button>
+            <button class="text-gray-400 whitespace-nowrap text-sm font-medium hover:text-white">
+                Ofertas
+            </button>
+        </div>
+    </nav>
+
+    <main class="pt-32 px-4 pb-20">
+        <div id="pageTodos">
+            <div class="max-w-4xl mx-auto text-center relative mb-20">
+                <div class="relative z-10">
+                    <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                        Produtos<br/>Digitais de<br/>Qualidade
+                    </h1>
+                    
+                    <p class="text-gray-300 text-lg md:text-xl mb-8 max-w-2xl mx-auto leading-relaxed">
+                        Acesso instantâneo a software, serviços e conteúdo digital de primeira qualidade. 
+                        Tudo que você precisa em um só lugar.
+                    </p>
+                    
+                    <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors inline-flex items-center gap-2">
+                        Explorar Produtos
+                        <span class="text-xl">→</span>
+                    </button>
+                </div>
+            </div>
+
+            <section class="max-w-7xl mx-auto">
+                <div class="mb-8">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Categorias<br/>Principais</h2>
+                    <p class="text-gray-400 text-lg">Explore nossa seleção de produtos digitais</p>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-2xl p-6">
+                        <div class="relative z-10 mb-6">
+                            <div class="w-full max-w-sm mx-auto aspect-[3/4] bg-black rounded-lg overflow-hidden border-4 border-yellow-600 shadow-2xl">
+                                <div class="w-full h-full bg-black flex flex-col items-center justify-between p-6 relative">
+                                    <div style="position: absolute; inset: 12px; border: 2px solid rgba(217, 175, 55, 0.5);"></div>
+                                    
+                                    <div class="text-center z-10 mt-8">
+                                        <h4 class="text-5xl font-black text-yellow-500 mb-2 tracking-tight" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5)">MÉTODO</h4>
+                                        <h4 class="text-6xl font-black text-yellow-500 mb-4 tracking-tight" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5)">Lite</h4>
+                                        <p class="text-3xl font-bold text-white">renda extra</p>
+                                    </div>
+                                    
+                                    <div class="relative z-10 my-6">
+                                        <svg class="w-64 h-32" viewBox="0 0 300 150">
+                                            <g class="opacity-90">
+                                                <rect x="30" y="70" width="15" height="40" fill="#d4af37" />
+                                                <line x1="37.5" y1="60" x2="37.5" y2="110" stroke="#d4af37" stroke-width="2"/>
+                                                <rect x="60" y="50" width="15" height="60" fill="#d4af37" />
+                                                <line x1="67.5" y1="40" x2="67.5" y2="110" stroke="#d4af37" stroke-width="2"/>
+                                                <rect x="90" y="60" width="15" height="50" fill="#d4af37" />
+                                                <line x1="97.5" y1="50" x2="97.5" y2="110" stroke="#d4af37" stroke-width="2"/>
+                                                <rect x="120" y="40" width="15" height="50" fill="#d4af37" />
+                                                <line x1="127.5" y1="30" x2="127.5" y2="90" stroke="#d4af37" stroke-width="2"/>
+                                                <rect x="150" y="45" width="15" height="55" fill="#d4af37" />
+                                                <line x1="157.5" y1="35" x2="157.5" y2="100" stroke="#d4af37" stroke-width="2"/>
+                                                <rect x="180" y="55" width="15" height="45" fill="#d4af37" />
+                                                <line x1="187.5" y1="45" x2="187.5" y2="100" stroke="#d4af37" stroke-width="2"/>
+                                                <rect x="210" y="65" width="15" height="35" fill="#d4af37" />
+                                                <line x1="217.5" y1="55" x2="217.5" y2="100" stroke="#d4af37" stroke-width="2"/>
+                                            </g>
+                                            <path d="M 50 110 L 120 80 L 200 40 L 270 20" stroke="#d4af37" stroke-width="6" fill="none"/>
+                                            <polygon points="270,20 255,15 260,30" fill="#d4af37"/>
+                                        </svg>
+                                    </div>
+                                    
+                                    <div class="z-10 mb-4">
+                                        <h5 class="text-4xl font-black text-yellow-500 tracking-widest" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5)">E-BOOK</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-2">E-BOOK OURO</h3>
+                        <p class="text-gray-400 text-lg mb-6">💼 Transforme seu celular em uma central de alertas de venda com inteligência artificial!</p>
+                        <button class="text-red-600 font-semibold text-lg">Ver Produtos →</button>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-2xl p-6">
+                        <div class="relative z-10 mb-6">
+                            <div class="w-full max-w-sm mx-auto aspect-[3/4] rounded-lg overflow-hidden shadow-2xl relative" style="background: linear-gradient(180deg, #1e5c4a 0%, #4a7c59 50%, #7fb843 100%)">
+                                <div style="position: absolute; inset: 12px; border: 4px solid #d4af37; border-radius: 8px;"></div>
+                                <div style="position: absolute; inset: 24px; border: 2px solid rgba(217, 175, 55, 0.5); border-radius: 8px;"></div>
+                                
+                                <div class="relative z-10 h-full flex flex-col items-center justify-between p-8">
+                                    <div class="text-center mt-8">
+                                        <h4 class="text-5xl font-black text-yellow-500 mb-4 tracking-tight" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5)">MÉTODO</h4>
+                                        <h4 class="text-5xl font-black text-yellow-500 mb-4 tracking-tight" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5)">Estratégia</h4>
+                                        <p class="text-4xl font-bold text-white">de Compra</p>
+                                    </div>
+                                    
+                                    <div class="my-8">
+                                        <svg class="w-64 h-40" viewBox="0 0 300 180">
+                                            <g class="opacity-90">
+                                                <rect x="30" y="140" width="15" height="30" fill="#d4af37" />
+                                                <rect x="60" y="120" width="15" height="50" fill="#d4af37" />
+                                                <rect x="90" y="130" width="15" height="40" fill="#d4af37" />
+                                                <rect x="120" y="110" width="15" height="60" fill="#d4af37" />
+                                                <rect x="150" y="100" width="15" height="70" fill="#d4af37" />
+                                                <rect x="180" y="80" width="15" height="90" fill="#d4af37" />
+                                                <rect x="210" y="90" width="15" height="80" fill="#d4af37" />
+                                                <rect x="240" y="70" width="15" height="100" fill="#d4af37" />
+                                            </g>
+                                            <path d="M 40 150 L 80 130 L 120 140 L 160 110 L 200 80 L 240 50 L 280 30" stroke="#d4af37" stroke-width="8" fill="none"/>
+                                            <polygon points="280,30 265,25 270,40" fill="#d4af37"/>
+                                        </svg>
+                                    </div>
+                                    
+                                    <div style="position: absolute; bottom: 16px; right: 16px; font-size: 3.75rem; opacity: 0.8;">✨</div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-2">ESTRATÉGIA DE COMPRA</h3>
+                        <p class="text-gray-400 text-lg mb-6">Vendendo uma estratégia, utilizem-a para criar a sua própria estratégia por cima ☝️ da minha 📊</p>
+                        <button class="text-red-600 font-semibold text-lg">Ver Produtos →</button>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-2xl p-6">
+                        <div class="relative z-10 mb-6">
+                            <div class="w-full max-w-sm mx-auto aspect-[3/4] rounded-lg overflow-hidden shadow-2xl relative" style="background: linear-gradient(180deg, #8b1a1a 0%, #c42b2b 50%, #ff6b6b 100%)">
+                                <div style="position: absolute; inset: 12px; border: 4px solid #d4af37; border-radius: 8px;"></div>
+                                <div style="position: absolute; inset: 24px; border: 2px solid rgba(217, 175, 55, 0.5); border-radius: 8px;"></div>
+                                
+                                <div class="relative z-10 h-full flex flex-col items-center justify-between p-8">
+                                    <div class="text-center mt-8">
+                                        <h4 class="text-5xl font-black text-yellow-500 mb-4 tracking-tight" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5)">MÉTODO</h4>
+                                        <h4 class="text-5xl font-black text-yellow-500 mb-4 tracking-tight" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5)">Estratégia</h4>
+                                        <p class="text-3xl font-bold text-white mb-2">CRASH STM 300 FX</p>
+                                        <p class="text-2xl font-semibold text-white">estratégia de venda</p>
+                                    </div>
+                                    
+                                    <div class="my-8">
+                                        <svg class="w-64 h-40" viewBox="0 0 300 180">
+                                            <g class="opacity-90">
+                                                <rect x="30" y="140" width="15" height="30" fill="#d4af37" />
+                                                <rect x="60" y="120" width="15" height="50" fill="#d4af37" />
+                                                <rect x="90" y="130" width="15" height="40" fill="#d4af37" />
+                                                <rect x="120" y="110" width="15" height="60" fill="#d4af37" />
+                                                <rect x="150" y="100" width="15" height="70" fill="#d4af37" />
+                                                <rect x="180" y="80" width="15" height="90" fill="#d4af37" />
+                                                <rect x="210" y="90" width="15" height="80" fill="#d4af37" />
+                                                <rect x="240" y="70" width="15" height="100" fill="#d4af37" />
+                                            </g>
+                                            <path d="M 40 150 L 80 130 L 120 140 L 160 110 L 200 80 L 240 50 L 280 30" stroke="#d4af37" stroke-width="8" fill="none"/>
+                                            <polygon points="280,30 265,25 270,40" fill="#d4af37"/>
+                                        </svg>
+                                    </div>
+                                    
+                                    <div style="position: absolute; bottom: 16px; right: 16px; font-size: 3.75rem; opacity: 0.8;">✨</div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-2">CRASH STM 300 FX</h3>
+                        <p class="text-gray-400 text-lg mb-6">Estratégia de venda 80% Assertividade</p>
+                        <button class="text-red-600 font-semibold text-lg">Ver Produtos →</button>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-2xl p-6">
+                        <div class="relative z-10 mb-6">
+                            <div class="w-full max-w-sm mx-auto aspect-[3/4] rounded-lg overflow-hidden shadow-2xl relative" style="background: linear-gradient(180deg, #0a0a1a 0%, #1a0a1a 100%)">
+                                <div style="position: absolute; inset: 12px; border: 4px solid; border-image: linear-gradient(180deg, #00bfff 0%, #ff1744 100%) 1; box-shadow: 0 0 30px rgba(0, 191, 255, 0.5), inset 0 0 30px rgba(255, 23, 68, 0.3);"></div>
+                                
+                                <div class="relative z-10 h-full flex flex-col items-center justify-between p-8">
+                                    <div class="text-center mt-12">
+                                        <h4 class="text-6xl font-black mb-4" style="color: #00bfff; text-shadow: 0 0 20px rgba(0, 191, 255, 0.8), 2px 2px 4px rgba(0,0,0,0.8)">SellAlert</h4>
+                                        <h4 class="text-5xl font-black mb-4" style="color: #d0d0d0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8)">ProV0.0.6</h4>
+                                        <p class="text-3xl font-semibold text-white">ferramenta</p>
+                                    </div>
+                                    
+                                    <div class="my-8">
+                                        <svg class="w-48 h-48" viewBox="0 0 200 200">
+                                            </svg>
+                                    </div>
+                                    
+                                    <div class="text-center mb-8">
+                                        <p class="text-4xl font-black" style="color: #d0d0d0; text-shadow: 2px 2px 4px rgba(0,0,0,0.8)">ProV0.0.6</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-2">SellAlert ProV0.0.6</h3>
+                        <p class="text-gray-400 text-lg mb-6">💻 Invista uma única vez e comece a operar com inteligência. Sem mensalidades. Sem complicações.</p>
+                        <button class="text-red-600 font-semibold text-lg">Ver Produtos →</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="max-w-7xl mx-auto mt-20">
+                <div class="space-y-16">
+                    <div class="text-center">
+                        <div class="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-red-900/30 to-red-950/30 rounded-2xl mb-6">
+                            <svg class="w-12 h-12 text-red-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-3">Acesso Instantâneo</h3>
+                        <p class="text-gray-400 text-lg max-w-md mx-auto">
+                            Receba seus produtos digitais imediatamente após a compra
+                        </p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-red-900/30 to-red-950/30 rounded-2xl mb-6">
+                            <svg class="w-12 h-12 text-red-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                <path d="M7 11V7a5 5 0 0110 0v4"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-3">Segurança Garantida</h3>
+                        <p class="text-gray-400 text-lg max-w-md mx-auto">
+                            Transações protegidas e dados criptografados
+                        </p>
+                    </div>
+
+                    <a href="https://www.jotform.com/agent/019b38d959497d02893a625fdb6ef741be6f" target="_blank" class="text-center block">
+                        <div class="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-red-900/30 to-red-950/30 rounded-2xl mb-6">
+                            <svg class="w-12 h-12 text-red-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 18v-6a9 9 0 0118 0v6"/>
+                                <path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-3">Suporte 24/7</h3>
+                        <p class="text-gray-400 text-lg max-w-md mx-auto">
+                            Equipe pronta para ajudar em qualquer momento
+                        </p>
+                    </a>
+                </div>
+            </section>
+        </div>
+
+        <div id="pageSoftware" style="display: none;">
+            <h2 class="text-4xl font-bold mb-8">Software</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8 text-center">
+                    <span class="text-4xl">📦</span>
+                    <h3 class="text-2xl font-bold text-gray-600 mt-4">Produto em breve</h3>
+                </div>
+                <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8 text-center">
+                    <span class="text-4xl">📦</span>
+                    <h3 class="text-2xl font-bold text-gray-600 mt-4">Produto em breve</h3>
+                </div>
+            </div>
+        </div>
+
+        <div id="pageConfiguracoes" style="display: none;">
+            <div class="max-w-4xl mx-auto">
+                <button onclick="voltarHome()" class="text-red-600 hover:text-red-500 mb-6 flex items-center gap-2 text-lg font-bold">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Voltar
+                </button>
+                
+                <h2 class="text-5xl font-bold mb-4">⚙️ Configurações</h2>
+                <p class="text-gray-400 text-xl mb-8">Personalize sua experiência</p>
+
+                <div class="bg-gray-900 border-2 border-gray-700 rounded-2xl p-8">
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h3 class="text-3xl font-bold mb-2">🎨 Plano de Fundo</h3>
+                            <p class="text-gray-400 text-lg">Alternar entre tema claro e escuro</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="toggleBackground" class="sr-only peer" onchange="toggleBackgroundColor()">
+                            <div class="w-20 h-10 bg-gray-600 rounded-full peer peer-checked:after:translate-x-10 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-9 after:w-9 after:transition-all peer-checked:bg-red-600"></div>
+                        </label>
+                    </div>
+                    <div class="pt-4 border-t-2 border-gray-700">
+                        <p class="text-xl font-bold">
+                            <span id="bgStatus">🌙 Tema escuro ativo</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-900 border-2 border-gray-700 rounded-2xl p-8 mt-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex-1">
+                            <h3 class="text-3xl font-bold mb-2">💎 Tema Premium 🔒</h3>
+                            <p class="text-gray-400 text-lg">Degradê azul escuro elegante (Bloqueado)</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="bg-green-600 text-white font-bold text-2xl px-4 py-2 rounded-lg">
+                                $2,99
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="toggleWhiteTheme" class="sr-only peer" onchange="toggleWhiteTheme()">
+                                <div class="w-20 h-10 bg-gray-600 rounded-full peer peer-checked:after:translate-x-10 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-9 after:w-9 after:transition-all peer-checked:bg-blue-600"></div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t-2 border-gray-700">
+                        <p class="text-xl font-bold mb-3">
+                            <span id="whiteStatus">🔒 Tema bloqueado</span>
+                        </p>
+                        <div id="unlockSection" class="mt-4">
+                            <div class="mb-3">
+                                <input 
+                                    type="password" 
+                                    id="premiumPassword" 
+                                    placeholder="Digite a senha"
+                                    class="w-full bg-gray-800 text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-blue-500 focus:outline-none text-lg"
+                                />
+                            </div>
+                            <button onclick="unlockPremium()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+                                🔓 Desbloquear Tema Premium
+                            </button>
+                        </div>
+                        <div id="unlockedMessage" class="mt-4 hidden">
+                            <p class="text-green-400 font-semibold text-lg">✅ Tema premium desbloqueado!</p>
+                        </div>
+                        <div id="errorMessage" class="mt-3 hidden">
+                            <p class="text-red-400 font-semibold">❌ Senha incorreta!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pageVersoes" style="display: none;">
+            <div class="max-w-4xl mx-auto">
+                <button onclick="voltarHome()" class="text-red-600 hover:text-red-500 mb-6 flex items-center gap-2 text-lg font-bold">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                    Voltar
+                </button>
+                
+                <h2 class="text-5xl font-bold mb-4">🏷️ Versões</h2>
+                <p class="text-gray-400 text-xl mb-8">Histórico de versões do site</p>
+
+                <div class="space-y-4">
+                    <div class="bg-gray-900 border-2 border-gray-700 rounded-xl p-6 hover:border-red-600 transition-colors">
+                        <h3 class="text-3xl font-bold mb-2">V1.0.5</h3>
+                        <p class="text-gray-400">Versão mais recente</p>
+                    </div>
+
+                    <div class="bg-gray-900 border-2 border-gray-700 rounded-xl p-6 hover:border-gray-600 transition-colors">
+                        <h3 class="text-3xl font-bold mb-2">V1.0.4</h3>
+                        <p class="text-gray-400">Versão anterior</p>
+                    </div>
+
+                    <div class="bg-gray-900 border-2 border-gray-700 rounded-xl p-6 hover:border-gray-600 transition-colors">
+                        <h3 class="text-3xl font-bold mb-2">V1.0.3</h3>
+                        <p class="text-gray-400">Versão anterior</p>
+                    </div>
+
+                    <div class="bg-gray-900 border-2 border-gray-700 rounded-xl p-6 hover:border-gray-600 transition-colors">
+                        <h3 class="text-3xl font-bold mb-2">V1.0.2</h3>
+                        <p class="text-gray-400">Versão anterior</p>
+                    </div>
+
+                    <div class="bg-gray-900 border-2 border-gray-700 rounded-xl p-6 hover:border-gray-600 transition-colors">
+                        <h3 class="text-3xl font-bold mb-2">V1.0.1</h3>
+                        <p class="text-gray-400">Versão inicial</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let premiumUnlocked = false;
+
+        const produtos = {
+            'E-BOOK OURO': {
+                nome: 'E-BOOK OURO',
+                descricao: '💼 Transforme seu celular em uma central de alertas de venda com inteligência artificial! Aprenda estratégias comprovadas para gerar renda extra.',
+                categoria: 'ebook'
+            },
+            'ESTRATÉGIA DE COMPRA': {
+                nome: 'ESTRATÉGIA DE COMPRA',
+                descricao: 'Vendendo uma estratégia completa! Utilize-a para criar sua própria estratégia por cima da minha. 📊 Métodos testados e aprovados.',
+                categoria: 'estrategia'
+            },
+            'CRASH STM 300 FX': {
+                nome: 'CRASH STM 300 FX',
+                descricao: 'Estratégia de venda com 80% de assertividade! Método exclusivo para operações de alta precisão no mercado financeiro.',
+                categoria: 'crash'
+            },
+            'SELLALERT PROV0.0.6': {
+                nome: 'SellAlert ProV0.0.6',
+                descricao: '💻 Invista uma única vez e comece a operar com inteligência. Sem mensalidades. Sem complicações. Ferramenta profissional de alertas.',
+                categoria: 'software'
+            }
+        };
+
+        function filterProducts() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const searchResults = document.getElementById('searchResults');
+            
+            if (searchInput.length === 0) {
+                searchResults.classList.add('hidden');
+                return;
+            }
+            
+            const results = Object.values(produtos).filter(produto => 
+                produto.nome.toLowerCase().includes(searchInput) ||
+                produto.categoria.toLowerCase().includes(searchInput)
+            );
+            
+            if (results.length > 0) {
+                searchResults.innerHTML = results.map(produto => `
+                    <div onclick="openProductModal('${produto.nome}')" class="px-4 py-4 hover:bg-gray-800 cursor-pointer border-b border-gray-800 last:border-b-0 transition-colors">
+                        <h3 class="text-white font-bold text-lg">${produto.nome}</h3>
+                        <p class="text-gray-400 text-sm mt-1">Categoria: ${produto.categoria}</p>
+                    </div>
+                `).join('');
+                searchResults.classList.remove('hidden');
+            } else {
+                searchResults.innerHTML = '<div class="px-4 py-6 text-center text-gray-400">Nenhum produto encontrado</div>';
+                searchResults.classList.remove('hidden');
+            }
+        }
+
+        function openProductModal(produtoNome) {
+            const produto = produtos[produtoNome.toUpperCase()];
+            if (!produto) return;
+            
+            document.getElementById('modalTitle').textContent = produto.nome;
+            document.getElementById('modalDescription').textContent = produto.descricao;
+            document.getElementById('productModal').classList.remove('hidden');
+            
+            // Fechar barra de pesquisa
+            document.getElementById('searchBar').classList.add('hidden');
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchResults').classList.add('hidden');
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.add('hidden');
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('menuDropdown');
+            menu.classList.toggle('hidden');
+        }
+
+        function toggleSearch() {
+            const search = document.getElementById('searchBar');
+            search.classList.toggle('hidden');
+        }
+
+        function showPage(page) {
+            document.getElementById('pageTodos').style.display = 'none';
+            document.getElementById('pageSoftware').style.display = 'none';
+            document.getElementById('pageConfiguracoes').style.display = 'none';
+            document.getElementById('pageVersoes').style.display = 'none';
+            
+            if (page === 'todos') {
+                document.getElementById('pageTodos').style.display = 'block';
+            } else if (page === 'software') {
+                document.getElementById('pageSoftware').style.display = 'block';
+            }
+        }
+
+        function showConfiguracoes() {
+            document.getElementById('menuDropdown').classList.add('hidden');
+            document.getElementById('pageTodos').style.display = 'none';
+            document.getElementById('pageSoftware').style.display = 'none';
+            document.getElementById('pageConfiguracoes').style.display = 'block';
+            document.getElementById('pageVersoes').style.display = 'none';
+            window.scrollTo(0, 0);
+        }
+
+        function showVersoes() {
+            document.getElementById('menuDropdown').classList.add('hidden');
+            document.getElementById('pageTodos').style.display = 'none';
+            document.getElementById('pageSoftware').style.display = 'none';
+            document.getElementById('pageConfiguracoes').style.display = 'none';
+            document.getElementById('pageVersoes').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function voltarHome() {
+            document.getElementById('pageConfiguracoes').style.display = 'none';
+            document.getElementById('pageVersoes').style.display = 'none';
+            document.getElementById('pageTodos').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function showPasswordPrompt() {
+            const password = prompt('Digite a senha para desbloquear o Tema Premium:');
+            
+            if (password === '3127') {
+                premiumUnlocked = true;
+                document.getElementById('unlockSection').classList.add('hidden');
+                document.getElementById('unlockedMessage').classList.remove('hidden');
+                document.getElementById('whiteStatus').textContent = '✅ Tema premium desbloqueado';
+                alert('🎉 Tema Premium desbloqueado com sucesso! Agora você pode ativá-lo.');
+            } else if (password !== null) {
+                alert('❌ Senha incorreta! Tente novamente.');
+            }
+        }
+
+        function unlockPremium() {
+            const passwordInput = document.getElementById('premiumPassword');
+            const password = passwordInput.value;
+            const errorMsg = document.getElementById('errorMessage');
+            
+            if (password === '3127') {
+                premiumUnlocked = true;
+                document.getElementById('unlockSection').classList.add('hidden');
+                document.getElementById('unlockedMessage').classList.remove('hidden');
+                document.getElementById('whiteStatus').textContent = '✅ Tema premium desbloqueado';
+                errorMsg.classList.add('hidden');
+            } else {
+                errorMsg.classList.remove('hidden');
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        }
+
+        // Permitir desbloquear com Enter
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('premiumPassword');
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        unlockPremium();
+                    }
+                });
+            }
+        });
+
+        function toggleBackgroundColor() {
+            const checkbox = document.getElementById('toggleBackground');
+            const whiteCheckbox = document.getElementById('toggleWhiteTheme');
+            const body = document.body;
+            const status = document.getElementById('bgStatus');
+            const header = document.querySelector('header');
+            const nav = document.querySelector('nav');
+            
+            // Desmarcar o tema branco se estiver ativo
+            if (whiteCheckbox.checked) {
+                whiteCheckbox.checked = false;
+                document.getElementById('whiteStatus').textContent = '⚪ Tema premium desativado';
+            }
+            
+            if (checkbox.checked) {
+                // Tema elegante com degradê roxo/rosa/laranja
+                body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #ffa751 100%)';
+                body.style.backgroundAttachment = 'fixed';
+                body.style.color = '#ffffff';
+                if (header) {
+                    header.style.background = 'linear-gradient(to right, #667eea, #764ba2)';
+                    header.style.borderColor = '#667eea';
+                    header.style.boxShadow = '0 4px 6px rgba(102, 126, 234, 0.4)';
+                }
+                if (nav) {
+                    nav.style.background = 'linear-gradient(to right, #764ba2, #667eea)';
+                    nav.style.borderColor = '#764ba2';
+                    nav.style.boxShadow = '0 4px 6px rgba(118, 75, 162, 0.3)';
+                }
+                const navButtons = document.querySelectorAll('nav button');
+                navButtons.forEach(btn => {
+                    if (btn.classList.contains('text-white')) {
+                        btn.style.color = '#ffffff';
+                    } else if (btn.classList.contains('text-gray-400')) {
+                        btn.style.color = '#e0e0e0';
+                    }
+                });
+                status.textContent = '🎨 Tema colorido ativo';
+            } else {
+                // Tema escuro
+                body.style.background = 'black';
+                body.style.backgroundAttachment = 'initial';
+                body.style.color = 'white';
+                if (header) {
+                    header.style.background = 'black';
+                    header.style.borderColor = '#1f2937';
+                    header.style.boxShadow = 'none';
+                }
+                if (nav) {
+                    nav.style.background = 'black';
+                    nav.style.borderColor = '#1f2937';
+                    nav.style.boxShadow = 'none';
+                }
+                const navButtons = document.querySelectorAll('nav button');
+                navButtons.forEach(btn => {
+                    btn.style.color = '';
+                });
+                status.textContent = '🌙 Tema escuro ativo';
+            }
+        }
+
+        function toggleWhiteTheme() {
+            const checkbox = document.getElementById('toggleWhiteTheme');
+            
+            // Verificar se o tema está desbloqueado
+            if (!premiumUnlocked && checkbox.checked) {
+                checkbox.checked = false;
+                alert('🔒 Tema Premium bloqueado! Digite a senha abaixo para desbloquear.');
+                return;
+            }
+            
+            const colorCheckbox = document.getElementById('toggleBackground');
+            const body = document.body;
+            const status = document.getElementById('whiteStatus');
+            const header = document.querySelector('header');
+            const nav = document.querySelector('nav');
+            
+            // Desmarcar o tema colorido se estiver ativo
+            if (colorCheckbox.checked) {
+                colorCheckbox.checked = false;
+                document.getElementById('bgStatus').textContent = '🌙 Tema escuro ativo';
+            }
+            
+            if (checkbox.checked) {
+                // Tema premium azul escuro elegante
+                body.style.background = 'linear-gradient(135deg, #0f2027 0%, #203a43 20%, #2c5364 40%, #1e3c72 60%, #2a5298 80%, #7e22ce 100%)';
+                body.style.backgroundAttachment = 'fixed';
+                body.style.color = '#e0f2fe';
+                if (header) {
+                    header.style.background = 'linear-gradient(to right, #0f2027, #203a43, #2c5364)';
+                    header.style.borderColor = '#1e3c72';
+                    header.style.boxShadow = '0 4px 16px rgba(30, 60, 114, 0.5)';
+                }
+                if (nav) {
+                    nav.style.background = 'linear-gradient(to right, #203a43, #2c5364, #1e3c72)';
+                    nav.style.borderColor = '#2c5364';
+                    nav.style.boxShadow = '0 4px 12px rgba(44, 83, 100, 0.4)';
+                }
+                // Ajustar cores dos elementos
+                const navButtons = document.querySelectorAll('nav button');
+                navButtons.forEach(btn => {
+                    btn.style.color = '#e0f2fe';
+                    btn.style.fontWeight = '600';
+                });
+                // Ajustar logo
+                const logo = document.querySelector('h1');
+                if (logo) logo.style.color = '#ffffff';
+                const storeLogo = document.querySelector('h2');
+                if (storeLogo) storeLogo.style.color = '#ef4444';
+                
+                status.textContent = '💎 Tema azul premium ativo';
+            } else {
+                // Voltar ao tema escuro
+                body.style.background = 'black';
+                body.style.backgroundAttachment = 'initial';
+                body.style.color = 'white';
+                if (header) {
+                    header.style.background = 'black';
+                    header.style.borderColor = '#1f2937';
+                    header.style.boxShadow = 'none';
+                }
+                if (nav) {
+                    nav.style.background = 'black';
+                    nav.style.borderColor = '#1f2937';
+                    nav.style.boxShadow = 'none';
+                }
+                const navButtons = document.querySelectorAll('nav button');
+                navButtons.forEach(btn => {
+                    btn.style.color = '';
+                    btn.style.fontWeight = '';
+                });
+                // Resetar logo
+                const logo = document.querySelector('h1');
+                if (logo) logo.style.color = '';
+                const storeLogo = document.querySelector('h2');
+                if (storeLogo) storeLogo.style.color = '';
+                
+                status.textContent = premiumUnlocked ? '✅ Tema premium desbloqueado' : '🔒 Tema bloqueado';
+            }
+        }
+
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('menuDropdown');
+            const menuBtn = event.target.closest('button[onclick="toggleMenu()"]');
+            
+            if (!menu.contains(event.target) && !menuBtn) {
+                menu.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
