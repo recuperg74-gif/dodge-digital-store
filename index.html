@@ -139,7 +139,7 @@
             <button class="text-gray-400 whitespace-nowrap text-sm font-medium hover:text-white">
                 Serviços
             </button>
-            <button class="text-gray-400 whitespace-nowrap text-sm font-medium hover:text-white">
+            <button onclick="showPage('ofertas')" class="text-gray-400 whitespace-nowrap text-sm font-medium hover:text-white">
                 Ofertas
             </button>
         </div>
@@ -384,6 +384,32 @@
             </div>
         </div>
 
+        <div id="pageOfertas" style="display: none;">
+            <h2 class="text-4xl font-bold mb-8">Ofertas</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8 text-center">
+                    <span class="text-4xl">📦</span>
+                    <h3 class="text-2xl font-bold text-gray-600 mt-4">Produto em breve</h3>
+                </div>
+                <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8 text-center">
+                    <span class="text-4xl">📦</span>
+                    <h3 class="text-2xl font-bold text-gray-600 mt-4">Produto em breve</h3>
+                </div>
+                <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8 text-center">
+                    <span class="text-4xl">📦</span>
+                    <h3 class="text-2xl font-bold text-gray-600 mt-4">Produto em breve</h3>
+                </div>
+                <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8 text-center">
+                    <span class="text-4xl">📦</span>
+                    <h3 class="text-2xl font-bold text-gray-600 mt-4">Produto em breve</h3>
+                </div>
+                <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8 text-center">
+                    <span class="text-4xl">📦</span>
+                    <h3 class="text-2xl font-bold text-gray-600 mt-4">Produto em breve</h3>
+                </div>
+            </div>
+        </div>
+
         <div id="pageConfiguracoes" style="display: none;">
             <div class="max-w-4xl mx-auto">
                 <button onclick="voltarHome()" class="text-red-600 hover:text-red-500 mb-6 flex items-center gap-2 text-lg font-bold">
@@ -585,20 +611,36 @@
         function showPage(page) {
             document.getElementById('pageTodos').style.display = 'none';
             document.getElementById('pageSoftware').style.display = 'none';
+            document.getElementById('pageOfertas').style.display = 'none'; // Adicionado
             document.getElementById('pageConfiguracoes').style.display = 'none';
             document.getElementById('pageVersoes').style.display = 'none';
             
+            // Resetar estilos dos botões da nav
+            const navButtons = document.querySelectorAll('nav button');
+            navButtons.forEach(btn => {
+                btn.classList.remove('text-white', 'border-b-2', 'border-red-600');
+                btn.classList.add('text-gray-400');
+            });
+
+            // Mostrar página e ativar botão
             if (page === 'todos') {
                 document.getElementById('pageTodos').style.display = 'block';
             } else if (page === 'software') {
                 document.getElementById('pageSoftware').style.display = 'block';
+            } else if (page === 'ofertas') {
+                document.getElementById('pageOfertas').style.display = 'block';
             }
+            
+            // Adicionar destaque ao botão clicado (via texto ou lógica similar)
+            event.currentTarget.classList.remove('text-gray-400');
+            event.currentTarget.classList.add('text-white', 'border-b-2', 'border-red-600');
         }
 
         function showConfiguracoes() {
             document.getElementById('menuDropdown').classList.add('hidden');
             document.getElementById('pageTodos').style.display = 'none';
             document.getElementById('pageSoftware').style.display = 'none';
+            document.getElementById('pageOfertas').style.display = 'none';
             document.getElementById('pageConfiguracoes').style.display = 'block';
             document.getElementById('pageVersoes').style.display = 'none';
             window.scrollTo(0, 0);
@@ -608,6 +650,7 @@
             document.getElementById('menuDropdown').classList.add('hidden');
             document.getElementById('pageTodos').style.display = 'none';
             document.getElementById('pageSoftware').style.display = 'none';
+            document.getElementById('pageOfertas').style.display = 'none';
             document.getElementById('pageConfiguracoes').style.display = 'none';
             document.getElementById('pageVersoes').style.display = 'block';
             window.scrollTo(0, 0);
@@ -618,20 +661,6 @@
             document.getElementById('pageVersoes').style.display = 'none';
             document.getElementById('pageTodos').style.display = 'block';
             window.scrollTo(0, 0);
-        }
-
-        function showPasswordPrompt() {
-            const password = prompt('Digite a senha para desbloquear o Tema Premium:');
-            
-            if (password === '3127') {
-                premiumUnlocked = true;
-                document.getElementById('unlockSection').classList.add('hidden');
-                document.getElementById('unlockedMessage').classList.remove('hidden');
-                document.getElementById('whiteStatus').textContent = '✅ Tema premium desbloqueado';
-                alert('🎉 Tema Premium desbloqueado com sucesso! Agora você pode ativá-lo.');
-            } else if (password !== null) {
-                alert('❌ Senha incorreta! Tente novamente.');
-            }
         }
 
         function unlockPremium() {
@@ -672,63 +701,42 @@
             const header = document.querySelector('header');
             const nav = document.querySelector('nav');
             
-            // Desmarcar o tema branco se estiver ativo
             if (whiteCheckbox.checked) {
                 whiteCheckbox.checked = false;
                 document.getElementById('whiteStatus').textContent = '⚪ Tema premium desativado';
             }
             
             if (checkbox.checked) {
-                // Tema elegante com degradê roxo/rosa/laranja
                 body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #ffa751 100%)';
                 body.style.backgroundAttachment = 'fixed';
                 body.style.color = '#ffffff';
                 if (header) {
                     header.style.background = 'linear-gradient(to right, #667eea, #764ba2)';
                     header.style.borderColor = '#667eea';
-                    header.style.boxShadow = '0 4px 6px rgba(102, 126, 234, 0.4)';
                 }
                 if (nav) {
                     nav.style.background = 'linear-gradient(to right, #764ba2, #667eea)';
                     nav.style.borderColor = '#764ba2';
-                    nav.style.boxShadow = '0 4px 6px rgba(118, 75, 162, 0.3)';
                 }
-                const navButtons = document.querySelectorAll('nav button');
-                navButtons.forEach(btn => {
-                    if (btn.classList.contains('text-white')) {
-                        btn.style.color = '#ffffff';
-                    } else if (btn.classList.contains('text-gray-400')) {
-                        btn.style.color = '#e0e0e0';
-                    }
-                });
                 status.textContent = '🎨 Tema colorido ativo';
             } else {
-                // Tema escuro
                 body.style.background = 'black';
                 body.style.backgroundAttachment = 'initial';
                 body.style.color = 'white';
                 if (header) {
                     header.style.background = 'black';
                     header.style.borderColor = '#1f2937';
-                    header.style.boxShadow = 'none';
                 }
                 if (nav) {
                     nav.style.background = 'black';
                     nav.style.borderColor = '#1f2937';
-                    nav.style.boxShadow = 'none';
                 }
-                const navButtons = document.querySelectorAll('nav button');
-                navButtons.forEach(btn => {
-                    btn.style.color = '';
-                });
                 status.textContent = '🌙 Tema escuro ativo';
             }
         }
 
         function toggleWhiteTheme() {
             const checkbox = document.getElementById('toggleWhiteTheme');
-            
-            // Verificar se o tema está desbloqueado
             if (!premiumUnlocked && checkbox.checked) {
                 checkbox.checked = false;
                 alert('🔒 Tema Premium bloqueado! Digite a senha abaixo para desbloquear.');
@@ -741,66 +749,34 @@
             const header = document.querySelector('header');
             const nav = document.querySelector('nav');
             
-            // Desmarcar o tema colorido se estiver ativo
             if (colorCheckbox.checked) {
                 colorCheckbox.checked = false;
                 document.getElementById('bgStatus').textContent = '🌙 Tema escuro ativo';
             }
             
             if (checkbox.checked) {
-                // Tema premium azul escuro elegante
                 body.style.background = 'linear-gradient(135deg, #0f2027 0%, #203a43 20%, #2c5364 40%, #1e3c72 60%, #2a5298 80%, #7e22ce 100%)';
                 body.style.backgroundAttachment = 'fixed';
                 body.style.color = '#e0f2fe';
                 if (header) {
                     header.style.background = 'linear-gradient(to right, #0f2027, #203a43, #2c5364)';
-                    header.style.borderColor = '#1e3c72';
-                    header.style.boxShadow = '0 4px 16px rgba(30, 60, 114, 0.5)';
                 }
                 if (nav) {
                     nav.style.background = 'linear-gradient(to right, #203a43, #2c5364, #1e3c72)';
-                    nav.style.borderColor = '#2c5364';
-                    nav.style.boxShadow = '0 4px 12px rgba(44, 83, 100, 0.4)';
                 }
-                // Ajustar cores dos elementos
-                const navButtons = document.querySelectorAll('nav button');
-                navButtons.forEach(btn => {
-                    btn.style.color = '#e0f2fe';
-                    btn.style.fontWeight = '600';
-                });
-                // Ajustar logo
-                const logo = document.querySelector('h1');
-                if (logo) logo.style.color = '#ffffff';
-                const storeLogo = document.querySelector('h2');
-                if (storeLogo) storeLogo.style.color = '#ef4444';
-                
                 status.textContent = '💎 Tema azul premium ativo';
             } else {
-                // Voltar ao tema escuro
                 body.style.background = 'black';
                 body.style.backgroundAttachment = 'initial';
                 body.style.color = 'white';
                 if (header) {
                     header.style.background = 'black';
                     header.style.borderColor = '#1f2937';
-                    header.style.boxShadow = 'none';
                 }
                 if (nav) {
                     nav.style.background = 'black';
                     nav.style.borderColor = '#1f2937';
-                    nav.style.boxShadow = 'none';
                 }
-                const navButtons = document.querySelectorAll('nav button');
-                navButtons.forEach(btn => {
-                    btn.style.color = '';
-                    btn.style.fontWeight = '';
-                });
-                // Resetar logo
-                const logo = document.querySelector('h1');
-                if (logo) logo.style.color = '';
-                const storeLogo = document.querySelector('h2');
-                if (storeLogo) storeLogo.style.color = '';
-                
                 status.textContent = premiumUnlocked ? '✅ Tema premium desbloqueado' : '🔒 Tema bloqueado';
             }
         }
@@ -808,7 +784,6 @@
         document.addEventListener('click', function(event) {
             const menu = document.getElementById('menuDropdown');
             const menuBtn = event.target.closest('button[onclick="toggleMenu()"]');
-            
             if (!menu.contains(event.target) && !menuBtn) {
                 menu.classList.add('hidden');
             }
@@ -816,3 +791,4 @@
     </script>
 </body>
 </html>
+           
