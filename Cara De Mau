@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzaria Cara de Mau</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial Black', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .poster {
+            width: 100%;
+            max-width: 800px;
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 50%, #ffd700 100%);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .poster::before {
+            content: '🍕';
+            position: absolute;
+            font-size: 300px;
+            opacity: 0.1;
+            top: -50px;
+            right: -50px;
+            transform: rotate(-15deg);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            font-size: 3.5em;
+            color: #fff;
+            text-shadow: 4px 4px 8px rgba(0,0,0,0.4);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #2d2d2d;
+            background: rgba(255,255,255,0.9);
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .rating {
+            background: rgba(255,255,255,0.95);
+            padding: 20px;
+            border-radius: 20px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .stars {
+            color: #ffd700;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .rating-text {
+            font-size: 1.8em;
+            color: #2d2d2d;
+            font-weight: bold;
+        }
+
+        .reviews {
+            font-size: 1.2em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .feature {
+            background: rgba(255,255,255,0.95);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .feature-text {
+            color: #2d2d2d;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .location {
+            background: rgba(255,255,255,0.95);
+            padding: 25px;
+            border-radius: 20px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .location-title {
+            color: #ff6b35;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .address {
+            color: #2d2d2d;
+            font-size: 1.1em;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .cta {
+            background: #2d2d2d;
+            color: #ffd700;
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-top: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 8px 20px rgba(255,215,0,0.3); }
+            50% { box-shadow: 0 8px 30px rgba(255,215,0,0.6); }
+        }
+
+        .time {
+            text-align: center;
+            color: #2d2d2d;
+            font-size: 1.2em;
+            margin-top: 15px;
+            background: rgba(255,255,255,0.8);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .whatsapp-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: #25D366;
+            color: white;
+            padding: 20px 30px;
+            border-radius: 50px;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-top: 25px;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .whatsapp-btn:hover {
+            background: #20ba5a;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6);
+        }
+
+        .whatsapp-icon {
+            font-size: 1.5em;
+            animation: ring 2s infinite;
+        }
+
+        @keyframes ring {
+            0%, 100% { transform: rotate(0deg); }
+            10%, 30% { transform: rotate(-10deg); }
+            20%, 40% { transform: rotate(10deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="poster">
+        <div class="header">
+            <div class="logo">🍕 CARA DE MAU 🍕</div>
+            <div class="subtitle">A Pizza Mais CARA DE MAU de Gramado!</div>
+        </div>
+
+        <div class="rating">
+            <div class="stars">★★★★★</div>
+            <div class="rating-text">4,8 ESTRELAS</div>
+            <div class="reviews">Mais de 16.600 avaliações!</div>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🔥</div>
+                <div class="feature-text">Massa Artesanal<br>Fermentação Natural</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🧀</div>
+                <div class="feature-text">Ingredientes<br>Premium</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎨</div>
+                <div class="feature-text">Sabores<br>Únicos</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">👨‍👩‍👧‍👦</div>
+                <div class="feature-text">Ambiente<br>Familiar</div>
+            </div>
+        </div>
+
+        <div class="location">
+            <div class="location-title">📍 VENHA NOS VISITAR!</div>
+            <div class="address">
+                <strong>R. Cel. João Corrêa, 394</strong><br>
+                Bairro Belvedere - Gramado/RS<br>
+                ⏰ Abre às 18h<br>
+                📶 Wi-Fi Grátis | 🍷 Cardápio Infantil
+            </div>
+        </div>
+
+        <div class="cta">
+            NÃO É SÓ PIZZA.<br>
+            É UMA EXPERIÊNCIA!
+        </div>
+
+        <div class="time">
+            Reserve pelo WhatsApp • Veja nosso Menu Online
+        </div>
+
+        <a href="https://wa.me/5554937120571" target="_blank" class="whatsapp-btn">
+            <span class="whatsapp-icon">📱</span>
+            <span>RESERVE PELO WHATSAPP</span>
+        </a>
+    </div>
+</body>
+</html>
